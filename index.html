@@ -1,0 +1,225 @@
+<!DOCTYPE html/>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Celebrity Baby Game Jeopardy!</title>
+		<meta name="description" content=", Katie Holmes&#39; daughter, Gwyneth Paltrow&#39;s Daughter, Britney Spears&#39; son (name any of the two), Demi Moore&#39;s Oldest Daughter" />
+		<meta name="ROBOTS" content="NOODP" />
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js" integrity="sha256-btLQj6RlkxXK4cg6XHngg3OVgPdiD3QlkaYMZacCmpA=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap-reboot.css" integrity="sha256-qt0HBm6NjfeYscsqC47HIkMZbTp4n6w0xK/d/qbNK/M=" crossorigin="anonymous" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="css/gameboard.css" rel="stylesheet" type="text/css" media="screen" />
+		<script type="text/javascript" src="scripts/main.js"></script>
+		<script type="text/javascript" src="scripts/jeopardy.js"></script>
+
+		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyCU9H1R0DlB83pomQMXenizNZZT0siUA7Y",
+				authDomain: "baby-jawpardy.firebaseapp.com",
+				databaseURL: "https://baby-jawpardy.firebaseio.com",
+				projectId: "baby-jawpardy",
+				storageBucket: "baby-jawpardy.appspot.com",
+				messagingSenderId: "378850714545"
+			};
+			firebase.initializeApp(config);
+
+			var db = firebase.database();
+		</script>
+
+		<script>
+			if(window.MathJax){
+			    MathJax.Hub.Config({
+			      asciimath2jax: {
+			        delimiters: [['`', '`']],
+			        skipTags: ["script","noscript","style","textarea","pre","code", "body"]
+			      }
+			    });
+			}
+		</script>
+        <script id="category" type="text/x-jsrender">
+            <div class="table-cell">
+                <div class="table-cell-inner">{{:title.toUpperCase()}}</div>
+            </div>
+        </script>
+        <script id="clue" type="text/x-jsrender">
+            <div data-points="{{:amount}}" tabindex="" class="table-cell">
+                <div class="table-cell-inner">
+                    <h3>{{:amount}}</h3>
+                    <div class="answer">{{:answer.toUpperCase()}}</div>
+                    <div class="question">{{:question.toUpperCase()}}</div>
+                </div>
+            </div>
+        </script>
+	</head>
+
+<body>
+    <div id="gameplay">
+        <div class="table-row" id="categories"></div>
+
+        <div id="question-grid"></div>
+
+        <div id="teams">
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 1</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 2</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 3</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 4</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 5</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 6</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 7</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 8</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 9</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 10</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 11</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+                <div class="team" style="display:none">
+                    <h3 class="name" contenteditable="true">Team 12</h3>
+                    <h3 class="points">0</h3>
+                    <div class="pointer">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </div>
+                </div>
+            
+        </div>
+
+        <div id="question-modal" class="modal-wrapper">
+            <table id="question-modal-table">
+                <tr id="question-title-wrapper">
+                    <td id="continue-button"><span style="float:right">Continue <kbd>ESC</kbd></span></td>
+                    <td id="question-title"></td>
+                    <td id="answer-button"><span style="float:left">Reveal Correct Response <kbd>Spacebar</kbd></span></td>
+                </tr>
+                <tr>
+                    <td class="modal2" colspan="3">
+                        <div class="modal-inner"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div id="options" class="modal-wrapper">
+        <div class="modal">
+            <h1>Celebrity Baby Game Jeopardy!</h1>
+            <select>
+                <option value="1">1 team</option>		
+                <option value="2">2 teams</option>
+                <option value="3">3 teams</option>
+                <option value="4">4 teams</option>
+                <option value="5">5 teams</option>
+                <option value="6">6 teams</option>
+                <option value="7">7 teams</option>
+                <option value="8">8 teams</option>
+                <option value="9">9 teams</option>
+                <option value="10">10 teams</option>	
+                <option value="11">11 teams</option>
+                <option value="12">12 teams</option>	
+            </select>
+            <input class="submit" type="button" id="submit" value="Start" onclick="game.init()" />
+            <p id="fullscreen" style="margin-top:20px; display:none" align="center">Press <kbd id="windows" style="display:none">F11</kbd> <kbd id="mac" style="display:none">View &gt; Enter Fullscreen</kbd> for full-screen mode</p>
+            <script>
+                if(window.navigator.platform.indexOf("Mac") == 0){
+                    $('#fullscreen, #mac').show();
+                } else if(window.navigator.platform.indexOf("Win") == 0){
+                    $('#fullscreen, #windows').show();
+                }
+            </script>            
+        </div>
+    </div>
+
+</body>
+</html>
