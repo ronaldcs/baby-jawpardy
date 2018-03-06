@@ -30,7 +30,7 @@ game.handleData = function(data) {
         modal.show(this);
     });
     $('#final-jeopardy-question:not(.empty)').on("click", function() {
-        modal.show(this);
+        modal.show(this, true);
     });
 }
 
@@ -128,13 +128,17 @@ modal.reveal = function() {
     })
 }
 
-modal.show = function(cell) {
+modal.show = function(cell, isFinal) {
     $('.active-question').removeClass("active-question");
     $(cell).addClass("active-question");
-    var position = $(cell).closest(".table-row").children().index(cell);
-    var category = $($("#categories .table-cell").get(position)).text()
-    var points = $(cell).attr("data-points");
-    $('#question-title').text(category + " for " + points);
+    if (isFinal) {
+        $('#question-title').text("Final Jeopardy");
+    } else {
+        var position = $(cell).closest(".table-row").children().index(cell);
+        var category = $($("#categories .table-cell").get(position)).text()
+        var points = $(cell).attr("data-points");
+        $('#question-title').text(category + " for " + points);
+    }
     var bbox = cell.getBoundingClientRect();
     $('#question-modal').css({
         "display": "block",

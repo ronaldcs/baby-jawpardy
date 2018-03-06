@@ -51,7 +51,7 @@ $(window).resize(function(e){
 });
 
 $(document).ready(function(){
-    $('#jeopardy-theme-song')[0].volume = 0.1;
+    $('#jeopardy-theme-song')[0].volume = 0.02;
     $('#question-modal').on("click", '#answer-button', function() {
         modal.reveal();
     })

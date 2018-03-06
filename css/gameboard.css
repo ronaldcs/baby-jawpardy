@@ -6,6 +6,17 @@ body {
     opacity:0;
 }
 
+#jeopardy-theme-song {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+}
+
+#jeopardy-timer-song {
+    width: 165px;
+}
+
 #final-jeopardy-container {
     position: fixed;
     bottom: 0;
