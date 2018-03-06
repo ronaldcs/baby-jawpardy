@@ -18,8 +18,8 @@ game.handleData = function(data) {
     });
     $.each(data, function(categoryIndex, category) {
         $('#categories.table-row').append($.templates("#category").render(category));
-        $.each(category.clues, function(clueIndex, clue) {
-            $($('#question-grid .table-row')[categoryIndex]).append($.templates("#clue").render(clue));
+        $.each(category.clues || Array(5).fill({amount:0,answer:"",question:""}), function(clueIndex, clue) {
+            $($('#question-grid .table-row')[clueIndex]).append($.templates("#clue").render(clue));
         });
     });
 
@@ -73,40 +73,39 @@ var trimHTML = function(el) {
 
 }
 
-var calculateSize = function(el) {
-    var max_width = Math.floor($(window).width() * .9);
-    var max_height = (($('#teams').offset().top || $(window).height()) - $(el).offset().top)/2.0;
-    var html = el.innerHTML
-    var text = $(el).text();
+// var calculateSize = function(el) {
+//     var max_width = Math.floor($(window).width() * .9);
+//     var max_height = (($('#teams').offset().top || $(window).height()) - $(el).offset().top)/2.0;
+//     var html = el.innerHTML
+//     var text = $(el).text();
 
-    var div = document.createElement("div");
-    div.className = "answer-wrapper"
-    div.style.display = "block";
-    div.style.overflowX = "auto";
-    div.style.position = "absolute";
-    div.style.left = "0";
-    div.style.top = "0";
-    div.style.zIndex = 1000;
-    div.style.width = max_width + "px";
-    // first, scale the text
-    div.innerText = text.replace(/\n/g, '');
+//     var div = document.createElement("div");
+//     div.className = "answer-wrapper"
+//     div.style.display = "block";
+//     div.style.overflowX = "auto";
+//     div.style.position = "absolute";
+//     div.style.left = "0";
+//     div.style.top = "0";
+//     div.style.zIndex = 1000;
+//     div.style.width = max_width + "px";
+//     // first, scale the text
+//     div.innerText = text.replace(/\n/g, '');
 
-    var body = $('body').get(0);
-    body.appendChild(div);
-    font_size = 100;
-    do {
-        div.style.fontSize = font_size + "px";
-        var w = div.offsetWidth
-        var h = div.offsetHeight;
-        if(w <= max_width && h <= max_height){
-            break;
-        }
-        font_size--;
-    } while(font_size);
-    div.parentNode.removeChild(div);
-    el.style.fontSize = font_size + 'px';
-    return font_size
-}
+//     var body = $('body').get(0);
+//     body.appendChild(div);
+//     font_size = 50;
+//     // do {
+//     //     div.style.fontSize = font_size + "px";
+//     //     var w = div.offsetWidth
+//     //     var h = div.offsetHeight;
+//     //     if(w <= max_width && h <= max_height){
+//     //         break;
+//     //     }
+//     //     font_size--;
+//     // } while(font_size);
+//     div.parentNode.removeChild(div);
+//     el.style.fontSize = font_size + 'px';
+// }
 
 var modal = function() {};
 
@@ -182,7 +181,7 @@ modal.show = function(cell) {
     trimHTML($('#question-modal .question').get(0))
     
 
-    var font_size = calculateSize($('#question-modal .modal-inner').get(0))
+    // calculateSize($('#question-modal .modal-inner').get(0))
 
     var h = ($('#teams').offset().top || $(window).height()) - $('#question-modal .modal2').offset().top - 20;
     $('#question-modal .modal-inner').css({
