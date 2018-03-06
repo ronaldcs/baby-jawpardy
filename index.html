@@ -54,6 +54,12 @@
                 </div>
             </div>
         </script>
+        <script id="final-jeopardy" type="text/x-jsrender">
+            <h3>FINAL JEOPARDY</h3>
+            <div class="topic">{{:topic.toUpperCase()}}</div>
+            <div class="answer">{{:answer.toUpperCase()}}</div>
+            <div class="question">{{:question.toUpperCase()}}</div>
+        </script>
 	</head>
 
 <body>
@@ -174,6 +180,14 @@
                 </tr>
             </table>
         </div>
+    </div>
+
+    <div id="final-jeopardy-container">
+        <div id="final-jeopardy-question"></div>
+        <audio id="jeopardy-theme-song" controls loop="true" autoplay="true">
+            Your browser does not support the <code>audio</code> element.
+            <source src="audio/Jeopardy Theme Song.mp3" type="audio/wav">
+        </audio>
     </div>
 
     <div id="options" class="modal-wrapper">
