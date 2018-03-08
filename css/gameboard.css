@@ -19,7 +19,7 @@ body {
 
 #final-jeopardy-container {
     position: fixed;
-    bottom: 0;
+    bottom: -67px;
     text-shadow: 3px 3px 2px #000;
 }
 

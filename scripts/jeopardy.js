@@ -81,51 +81,22 @@ var trimHTML = function(el) {
 var modal = function() {};
 
 modal.reveal = function() {
-    var q = $('#question-modal').find(".question")
+    var q = $('#question-modal').find(".question");
     q.css({
         "display": "block",
     });
-    function scrollTo(element, to, duration) {
-        var start = element.scrollTop,
-            change = to - start,
-            currentTime = 0,
-            increment = 20;
-            
-        var animateScroll = function() {        
-            currentTime += increment;
-            var val = easeInOutQuad(currentTime, start, change, duration);
-            element.scrollTop = val;
-            if(currentTime < duration) {
-                setTimeout(animateScroll, increment);
-            }
-        };
-        animateScroll();
-    }
 
-    //t = current time
-    //b = start value
-    //c = change in value
-    //d = duration
-    function easeInOutQuad(t, b, c, d){
-      t /= d/2;
-        if (t < 1) return c/2*t*t + b;
-        t--;
-        return -c/2 * (t*(t-2) - 1) + b;
-    };
-
-    var original_val = $('#question-modal .modal-inner').scrollTop()
-    $('#question-modal .modal-inner').scrollTop(0)
-    var val = $('#question-modal .question').offset().top - $('#question-modal .modal-inner').offset().top
-    $('#question-modal .modal-inner').scrollTop(original_val)
-    scrollTo($('#question-modal .modal-inner').get(0), val, 250)
+    var original_val = $('#question-modal .modal-inner').scrollTop();
+    $('#question-modal .modal-inner').scrollTop(0);
+    var val = $('#question-modal .question').offset().top - $('#question-modal .modal-inner').offset().top;
+    $('#question-modal .modal-inner').scrollTop(original_val);
+    $('#question-modal .modal-inner').animate({scrollTop: val}, 250, "easeOutExpo");
 
     setTimeout(function() {
         q.addClass("reveal");
-    }, 0)
+    }, 0);
 
-    $('.active-question h3').css({
-        "opacity": 0
-    })
+    $('.active-question h3').addClass("hide");
 }
 
 modal.show = function(cell, isFinal) {
@@ -175,6 +146,9 @@ modal.show = function(cell, isFinal) {
         if(e.keyCode == ESC){
             e.preventDefault();
             modal.hide();
+            if ($('#question-grid h3:visible').length === 0) {
+                $('#final-jeopardy-container').animate({bottom: 0}, 2000, "easeOutExpo");
+            }
         } else if(e.keyCode == SPACE){
             e.preventDefault();
             modal.reveal();
